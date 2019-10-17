@@ -17,6 +17,8 @@ class IndexController extends Controller {
     }
 
     public function JugadoresAction() {
+        $this->renderView('jugadores');
     }
+    
 
 }

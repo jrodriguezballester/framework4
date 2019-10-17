@@ -1,32 +1,38 @@
 <?php
 
-$subdomain = 'DWS/framework/4';
+$config = $GLOBALS["config"];
 
 return array(	
 	"routes" => array(
 		"/" => array(
-			"route" => $subdomain."/",
+			"route" => $config["site"]["subdomain"]."/",
 			"controller" => "index",
 			"action" => "index"
 		),
 
 		"Historia" => array(
-			"route" => $subdomain."/historia",
+			"route" => $config["site"]["subdomain"]."/historia",
 			"controller" => "index",
 			"action" => "historia"
 		),
 
 		"Jugadores" => array(
-			"route" => $subdomain."/jugadores",
+			"route" => $config["site"]["subdomain"]."/jugadores",
 			"controller" => "index",
 			"action" => "jugadores"
 		),
 
 		"Jugador" => array(
-			"route" => $subdomain."/jugador/:idJugador",
+			"route" => $config["site"]["subdomain"]."/jugador/:idJugador",
 			"controller" => "jugador",
 			"action" => "datosJugador"
 		),
+		"Error" => array(
+			"route" => $config["site"]["subdomain"]."/error",
+			"controller" => "error",
+			"action" => "historia"
+		)
+
 
 	),
 	"error" => "error.php"
