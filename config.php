@@ -13,7 +13,7 @@ return array(
     ),
     "BD" => array(
         "usuario" => "root",
-        "contrasena" => "root",  // en mi caso tengo contraseña pero en casa caso introducidla aquí.
+        "contrasena" => "root",  
         "servidor" => "localhost",
         "basededatos" => "nba",
        // "driver"="mysql:host"
