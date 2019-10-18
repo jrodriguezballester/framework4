@@ -15,13 +15,13 @@ class PdoConnection {
     public $bbdd;
 
     private function __construct(){
-
-        $this->bbdd=
-        $usuario = "root";
-        $contrasena = "tu_contraseña";  // en mi caso tengo contraseña pero en casa caso introducidla aquí.
-        $servidor = "localhost";
-        $basededatos = "alumnos";
-
+        global $config;
+        $driver=$config["DB"]["CONNECTION"];
+        $username = $config["DB"]["USERNAME"];
+        $password = $config["DB"]["PASSWORD"]; 
+        $basededatos = $config["DB"]["NAMEDB"];
+        ///poner try catch/////////////////////////////////
+        $this->bbdd=new PdoConnection("$driver:host=host;dbname=$basededatos","$username","$password");
 
     }
 
