@@ -11,12 +11,13 @@ return array(
 
 
     ),
-    "BD" => array(
-        "usuario" => "root",
-        "contrasena" => "root",  
-        "servidor" => "localhost",
-        "basededatos" => "nba",
-       // "driver"="mysql:host"
-
+    "DB" => array(
+        "CONNECTION"=>"mysql",
+        "HOST"=>"db",
+        "PORT" => "3306",
+        "USERNAME"=>"root",
+        "PASSWORD" => "root",  
+        "NAMEDB" => "nba",
+ 
     )
 );
