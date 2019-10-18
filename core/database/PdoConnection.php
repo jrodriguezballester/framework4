@@ -24,7 +24,7 @@ class PdoConnection {
         $this->bbdd=new PdoConnection("$driver:host=host;dbname=$basededatos","$username","$password");
 
     }
-
+//patron singlenton
     public static function getInstance() {
         if($this->instance==null){
             $this->instance=new PdoConnection();
@@ -48,8 +48,12 @@ class PdoConnection {
 
     public function delete($query, $params){
     }
-
+///////////////
     private function execQuery($query, $params) {
+        $ps=tisbbdd-prepare($query)
+        $ps-execu($params)
+        return $record
+
     }
 
     private function execQueryNoResult($query, $params) {

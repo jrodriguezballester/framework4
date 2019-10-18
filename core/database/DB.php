@@ -75,11 +75,34 @@ class DB {
     private function setWhere($condition) {
         array_push($this->wheres, $condition);
     }
-
+///
     public function get() {//montar la sentencia SELECT
+        $sql="SELECT ";
+        if ($this->fields=""){
+            $sql.="* "
+        }else{
+            foreach ($this->fields as $key =>$value){
+                $sql.='$value,';
+            }
+            $sql=substr(sql,0,-1);
+        }
+    ///////      
+        $sql.="WHERE ";
+        foreach ($this->where as $condition) {
+            sql.=$condition['field'].$condition['operator'].
+        }
+
+
     }
 
     public function insert($record) {
+        $sql="insert into .$this-getTable.("
+    foreach($recor as key =>value)
+    $sql.=$key.',';
+    $values.=":$keys";
+    $params[":".$key]=$value
+    
+    
     }
 
     public function lastInsertId() {
