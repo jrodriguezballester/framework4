@@ -1,6 +1,7 @@
 <?php
 
-class DB {
+class DB
+{
 
     private static $instance;
     private $table;
@@ -20,17 +21,20 @@ class DB {
      * @param [type] $table
      * @return void
      */
-    public static function table($table) {
+    public static function table($table)
+    {
         $instance = new static;
         $instance->setTable($table);
         return $instance;
     }
 
-    private function setTable($table){
+    private function setTable($table)
+    {
         $this->table = $table;
     }
 
-    private function getTable(){
+    private function getTable()
+    {
         return $this->table;
     }
 
@@ -41,22 +45,26 @@ class DB {
      * @param string ...$fields
      * @return void
      */
-    public function select(...$fields){
+    public function select(...$fields)
+    {
         foreach ($fields as $field) {
             $this->setField($field);
         }
         return $this;
     }
 
-    private function setField($field) {
+    private function setField($field)
+    {
         array_push($this->fields, $this->sanitize($field));
     }
 
-    private function sanitize($value) {
+    private function sanitize($value)
+    {
         return preg_replace('/[^0-9a-zA-Z_-]/', '', $value);
     }
 
-    public function where($field, $operator, $value) {
+    public function where($field, $operator, $value)
+    {
         $condition = [
             "field" => $this->sanitize($field),
             "operator" => $this->sanitizeOperator($operator),
@@ -66,56 +74,61 @@ class DB {
         return $this;
     }
 
-    private function sanitizeOperator($operator) {
+    private function sanitizeOperator($operator)
+    {
         if (in_array($operator, $this->operators))
             return $operator;
-            else return '=';
+        else return '=';
     }
 
-    private function setWhere($condition) {
+    private function setWhere($condition)
+    {
         array_push($this->wheres, $condition);
     }
-///
-    public function get() {//montar la sentencia SELECT
-        $sql="SELECT ";
-        if ($this->fields=""){
-            $sql.="* "
-        }else{
-            foreach ($this->fields as $key =>$value){
-                $sql.='$value,';
+    ///
+    public function get()
+    { //montar la sentencia SELECT
+        $sql = "SELECT ";
+        if ($this->fields = "") {
+            $sql .= " * ";
+        } else {
+            foreach ($this->fields as $key => $value) {
+                $sql .= '$value,';
             }
-            $sql=substr(sql,0,-1);
+            $sql = substr(sql, 0, -1);
         }
-    ///////      
-        $sql.="WHERE ";
+
+        $sql .= "WHERE ";
         foreach ($this->where as $condition) {
-            sql.=$condition['field'].$condition['operator'].
+            sql .= $condition['field'] . $condition['operator'] . $condition['value'];
         }
+        $sql .= ";";
+    }
 
+    public function insert($record)
+    {
+       // INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
+       // INSERT INTO table_name VALUES (value1, value2, value3, ...);
+        $sql = "INSERT INTO" . $this->getTable . "(";
+        foreach ($record as key => value) {
+            $sql .= $key . ',';
+            $values .= ":$keys";
+            $params[":" . $key] = $value;
+        }
+        $sql =  substr(sql, 0, -1);
+        $sql .=") VALUES (";
 
     }
 
-    public function insert($record) {
-        $sql="insert into .$this-getTable.("
-    foreach($recor as key =>value)
-    $sql.=$key.',';
-    $values.=":$keys";
-    $params[":".$key]=$value
-    
-    
-    }
-
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         $connection = PdoConnection::getInstance();
         return $connection->lastInsertId();
     }
 
-    public function delete() {
-    }
+    public function delete()
+    { }
 
-    public function update($record) {
-    }
-
-
+    public function update($record)
+    { }
 }
-

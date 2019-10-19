@@ -10,6 +10,7 @@ class JugadorController extends Controller {
 
 
     public function DatosJugadorAction($params) {
+        
     }
 
 }
