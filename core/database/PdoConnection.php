@@ -49,14 +49,16 @@ class PdoConnection {
     public function delete($query, $params){
     }
 ///////////////
-    private function execQuery($query, $params) {
-        $ps=tisbbdd-prepare($query)
-        $ps-execu($params)
-        return $record
+    private function execQuery($query, $params) {//modificado
+        $ps->$this->bbdd->prepare($query);
+        $ps-execute($params);
+        return $ps->fetchAll(\PDO::FETCH_ASSOC);
 
     }
 
     private function execQueryNoResult($query, $params) {
+        $ps->$this->bbdd->prepare($query);
+        return exe
     }
 
 };
