@@ -1,5 +1,5 @@
 <?php
-
+namespace core\database;
 class DB {
 
     private static $instance;
@@ -21,6 +21,7 @@ class DB {
      * @return void
      */
     public static function table($table) {
+        echo "entra en table \n";
         $instance = new static;
         $instance->setTable($table);
         return $instance;
@@ -31,6 +32,7 @@ class DB {
     }
 
     private function getTable(){
+      
         return $this->table;
     }
 
@@ -77,30 +79,41 @@ class DB {
     }
 ///
     public function get() {//montar la sentencia SELECT
+        echo "entra en get <br>";
+        echo "fields<pre>".print_r($this->fields)."</pre>";
+         $sql="";
         $sql="SELECT ";
-        if ($this->fields=""){
-            $sql.="* "
+        if ($this->fields==null){
+            $sql.="* ";
         }else{
-            foreach ($this->fields as $key =>$value){
-                $sql.='$value,';
+            foreach ($this->fields as $key => $value){
+                $sql.="$value,";
             }
-            $sql=substr(sql,0,-1);
+            $sql.=substr($sql,0,-1);
+
+           
         }
     ///////      
         $sql.="WHERE ";
-        foreach ($this->where as $condition) {
-            sql.=$condition['field'].$condition['operator'].
+        foreach ($this->wheres as $condition) {
+            $sql.=$condition['field'].$condition['operator'].$condition['value']. " AND ";
+            $params[";".$condition['field']]=$condition["value"];
         }
-
-
+        $sql=substr($sql,0,-5);
+        echo "sentencia sql <br>".$sql;
+        $condition=PdoConnection::getInstance();
+     //  echo "params".print_r($params);
+     //   return $condition->select($sql,$params);
+        return $condition->execQuery($sql,$params);
     }
 
     public function insert($record) {
-        $sql="insert into .$this-getTable.("
-    foreach($recor as key =>value)
-    $sql.=$key.',';
-    $values.=":$keys";
-    $params[":".$key]=$value
+    //     $sql="insert into .$this->getTable()."(";
+    //     $params
+    // foreach($recor as key =>value)
+    // $sql.=$key.',';
+    // $values.=":$keys";
+    // $params[":".$key]=$value
     
     
     }

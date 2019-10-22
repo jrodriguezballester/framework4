@@ -9,7 +9,9 @@ use core\database\DB as DB;
 class JugadorController extends Controller {
 
 
-    public function DatosJugadorAction($params) {
+    public function DatosJugadorAction($params) {//no es seguro
+        $idJugador=$params['idJugador'];
+        $this->renderView(('jugador'),['jugador'=>$idJugador])
     }
 
 }

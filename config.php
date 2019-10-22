@@ -16,7 +16,7 @@ return array(
         "HOST"=>"db",
         "PORT" => "3306",
         "USERNAME"=>"root",
-        "PASSWORD" => "root",  
+        "PASSWORD" => "",  
         "NAMEDB" => "nba",
  
     )
