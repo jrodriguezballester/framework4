@@ -11,9 +11,10 @@ return array(
 
 
     ),
+ //$this->bbdd=new PdoConnection("CONNECTION:host=HOST;dbname=NAMEDB","USERNAME","PASSWORD");   
     "DB" => array(
         "CONNECTION"=>"mysql",
-        "HOST"=>"db",
+        "HOST"=>"host",
         "PORT" => "3306",
         "USERNAME"=>"root",
         "PASSWORD" => "",  

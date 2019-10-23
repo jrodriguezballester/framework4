@@ -1,8 +1,13 @@
 <?php
+
 namespace core\database;
+
+use core\MVC\imprimir;
+
 //use PDO;
-class PdoConnection {
- 
+class PdoConnection
+{
+
 
     /**
      * Instancia de la clase
@@ -17,56 +22,69 @@ class PdoConnection {
      */
     public $bbdd;
 
-    private function __construct(){
-     
+    private function __construct()
+    {
+
         global $config;
-        $driver=$config["DB"]["CONNECTION"];
+        $controlador = $config["DB"]["CONNECTION"];
+        $host = $config["DB"]["HOST"];
+
         $username = $config["DB"]["USERNAME"];
-        $password = $config["DB"]["PASSWORD"]; 
+        $password = $config["DB"]["PASSWORD"];
         $basededatos = $config["DB"]["NAMEDB"];
         ///poner try catch/////////////////////////////////
-        //$this->bbdd=new PdoConnection("$driver:host=host;dbname=$basededatos","$username","$password");
-        $this->bbdd=new \PDO("mysql:host=localhost;dbname=nba","root","root");
+        //$this->bbdd=new \PDO("$driver:host=host;dbname=$basededatos","$username","$password");
+        $this->bbdd = new \PDO("mysql:host=localhost;dbname=nba", "root", "root");
     }
 
-//patron singlenton
-    public static function getInstance() {
-      //  echo $instance;
-        if(self::$instance==null){
-            self::$instance=new PdoConnection();
+    //patron singlenton
+    public static function getInstance()
+    {
+        //  echo $instance;
+        if (self::$instance == null) {
+            self::$instance = new PdoConnection();
         }
         return self::$instance;
     }
 
 
-    public function select($query, $params = null){
-    
+    public function select($query, $params = null)
+    {
+        //    $this->bbdd->execQuery($query, $params);
 
     }
 
-    public function insert($query, $params){
-    }
+    public function insert($query, $params)
+    { }
 
-    public function lastInsertId() {
-    }
+    public function lastInsertId()
+    { }
 
-    public function update($query, $params){
-    }
+    public function update($query, $params)
+    { }
 
 
-    public function delete($query, $params){
-    }
-///////////////
-    private function execQuery($query, $params) {//prepara sentencia sql, la ejecuta y la devuelve
-        $ps->$this->bbdd->prepare($query);
-        $ps-execute($params);
+    public function delete($query, $params)
+    { }
+    ///////////////
+    public function execQuery($query, $params)
+    { // cambiar a private prepara sentencia sql, la ejecuta y la devuelve
+        echo "<br>entra en execQuery <br>";
+        $imp = new imprimir();
+        $imp->imprime("bbdd",$this->bbdd);
+        $imp->imprime("query",$query);
+       
+        $ps=$this->bbdd->prepare($query);
+        
+      
+        $ps -> execute($params);
+        $imp->imprime("ps",$ps);
         return $ps->fetchAll(\PDO::FETCH_ASSOC);
-
     }
 
-     private function execQueryNoResult($query, $params) {
-    //     $ps->$this->bbdd->prepare($query);
-    //     return exe
-     }
-
+    private function execQueryNoResult($query, $params)
+    {
+        //     $ps->$this->bbdd->prepare($query);
+        //     return exe
+    }
 };

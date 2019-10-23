@@ -34,6 +34,9 @@ abstract class Controller
      * @return void
      */
     protected function renderView($viewName, $data = null) {
+        echo "entra en renderView";
+      
+        imprimir::imprime("data",$data);
         $view = new View($viewName);
         $view->render($data);
     }
