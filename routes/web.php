@@ -27,6 +27,25 @@ return array(
 			"controller" => "jugador",
 			"action" => "datosJugador"
 		),
+		"Borrar" => array(
+			"route" => $config["site"]["subdomain"]."/borrar",
+			"controller" => "index",
+			"action" => "borrar"
+		),
+		"Insertar" => array(
+			"route" => $config["site"]["subdomain"]."/insertar",
+			"controller" => "index",
+			"action" => "insertar"
+		),
+		"Actualizar" => array(
+			"route" => $config["site"]["subdomain"]."/actualizar",
+			"controller" => "index",
+			"action" => "actualizar"
+		),
+
+
+
+
 		"Error" => array(
 			"route" => $config["site"]["subdomain"]."/error",
 			"controller" => "error",

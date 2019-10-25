@@ -30,12 +30,10 @@
                     }
                     $tabla .= '<tr>';
                 }
-                $primeraFila = false;
+                $primeraFila = false;//////////////cambiar ruta 
                 foreach ($jugador as $key => $value) {
-                   
                     $tabla .= '<td>';
-                     $tabla .= ' <a href="/jugador/' . $jugador['codigo'] .'">';
-                   
+                    $tabla .= ' <a href="'.$config['site']['root'].'/jugador/' . $jugador['codigo'] . '">';
                     $tabla .=   $value . '</a></td>';
                 }
                 $tabla .= '</tr>';
