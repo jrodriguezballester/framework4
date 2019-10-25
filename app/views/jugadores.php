@@ -38,9 +38,6 @@
                    
                     $tabla .=   $value . '</a></td>';
                 }
-
-
-
                 $tabla .= '</tr>';
             }
             $tabla .= '</table>';
