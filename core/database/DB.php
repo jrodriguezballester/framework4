@@ -89,7 +89,7 @@ class DB {
     public function get() {//montar la sentencia SELECT
         echo "entra en get <br>";
         echo "fields<pre>".print_r($this->fields)."</pre>";
-         $sql="";
+        $sql="";
         $sql="SELECT ";
         if ($this->fields==null){
             $sql.="* ";
