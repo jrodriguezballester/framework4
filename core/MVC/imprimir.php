@@ -15,4 +15,5 @@ public static function imprime($tring,$var)
     echo "<br> ";
 
 } 
+
 }  

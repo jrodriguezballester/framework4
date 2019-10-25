@@ -1,6 +1,11 @@
 <?php
+
 namespace core\database;
-class DB {
+
+use core\MVC\imprimir;
+
+class DB
+{
 
     private static $instance;
     private $table;
@@ -20,9 +25,9 @@ class DB {
      * @param [type] $table
      * @return void
      */
-       public static function table($table) {
+    public static function table($table)
+    {
         echo "entra en table \n";
-
         $instance = new static;
         $instance->setTable($table);
         return $instance;
@@ -33,8 +38,9 @@ class DB {
         $this->table = $table;
     }
 
-    private function getTable(){
-      
+    private function getTable()
+    {
+
         return $this->table;
     }
 
@@ -85,46 +91,62 @@ class DB {
     {
         array_push($this->wheres, $condition);
     }
-///
-    public function get() {//montar la sentencia SELECT
+    ///
+    public function get()
+    { //montar la sentencia SELECT
         echo "entra en get <br>";
-        echo "fields<pre>".print_r($this->fields)."</pre>";
-        $sql="";
-        $sql="SELECT ";
-        if ($this->fields==null){
-            $sql.="* ";
-        }else{
-            foreach ($this->fields as $key => $value){
-                $sql.="$value,";
+        echo "fields<pre>" . print_r($this->fields) . "</pre>";
+        $sql = "";
+        $sql = "SELECT ";
+        if ($this->fields == null) {
+            $sql .= "* ";
+        } else {
+            foreach ($this->fields as $key => $value) {
+                $sql .= "$value,";
             }
-            $sql.=substr($sql,0,-1);
-
-           
+            $sql .= substr($sql, 0, -1);
         }
-        $sql .=" FROM " .$this->getTable()." ";
-    ///////      
-        $sql.="WHERE ";
+        $sql .= " FROM " . $this->getTable() . " ";
+        ///////      
+        $sql .= "WHERE ";
         foreach ($this->wheres as $condition) {
-            $sql.=$condition['field'].$condition['operator'].'"'.$condition['value'].'"'. " AND ";
-            $params[";".$condition['field']]=$condition["value"];
+            $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
+            $params[";" . $condition['field']] = $condition["value"];
         }
-        $sql=substr($sql,0,-5);
-        echo "sentencia sql <br>".$sql;
-        $condition=PdoConnection::getInstance();
-     //  echo "params".print_r($params);
-    //    return $condition->select($sql,$params);
-        return $condition->execQuery($sql,$params);
+        $sql = substr($sql, 0, -5);
+        echo "sentencia sql <br>" . $sql;
+        $condition = PdoConnection::getInstance();
+        //  echo "params".print_r($params);
+        //    return $condition->select($sql,$params);
+        return $condition->execQuery($sql, $params);
     }
 
-    public function insert($record) {
-    //     $sql="insert into .$this->getTable()."(";
-    //     $params
-    // foreach($recor as key =>value)
-    // $sql.=$key.',';
-    // $values.=":$keys";
-    // $params[":".$key]=$value
-    
-    
+    public function insert($record)
+    {
+        // echo "<br><br><br><br><br><br>";
+        // echo "entra en insert";
+        $sql = "";
+        //INSERT INTO nombreTabla (Campo1, Campo2,...) VALUES (:Campo1, :Campo2,...) 
+        $sql = "INSERT INTO " . $this->getTable() . " (";
+        //     $params
+        //  imprimir::imprime("sql ",$sql);
+        $sqlAux = "";
+        foreach ($record as $key => $value) {           
+            $sql .= $key . ',';
+            $values = ":$key";
+            $sqlAux .= $values . ",";
+            // echo "keys".$key."<br>";
+            // echo "values".$sqlAux."<br>";
+            $params[":" . $key] = $value;        
+        }
+        $sql = substr($sql, 0, -1);
+        $sql .= ") VALUES (".$sqlAux;
+        $sql = substr($sql, 0, -1);
+        $sql .= ");";
+        imprimir::imprime("la expresion sql ", $sql);
+        imprimir::imprime("params ", $params);
+        $condition = PdoConnection::getInstance();
+        return $condition->execQueryNoResult($sql, $params);
     }
 
     public function lastInsertId()
@@ -134,8 +156,16 @@ class DB {
     }
 
     public function delete()
-    { }
+    {
+        //    DELETE FROM tblInvoices WHERE InvoiceID = 3 
+
+    }
 
     public function update($record)
-    { }
+    {
+        //    UPDATE table name 
+        //  SET field name  = some value
+        // WHERE [Last Name] = 'Smith' 
+
+    }
 }

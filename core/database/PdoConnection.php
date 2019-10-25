@@ -1,10 +1,10 @@
 <?php
 
 namespace core\database;
-
+//use core\database\PDO;
 use core\MVC\imprimir;
 
-//use PDO;
+use PDO;
 class PdoConnection
 {
 
@@ -40,7 +40,7 @@ class PdoConnection
     //patron singlenton
     public static function getInstance()
     {
-        //  echo $instance;
+
         if (self::$instance == null) {
             self::$instance = new PdoConnection();
         }
@@ -70,21 +70,32 @@ class PdoConnection
     public function execQuery($query, $params)
     { // cambiar a private prepara sentencia sql, la ejecuta y la devuelve
         echo "<br>entra en execQuery <br>";
-        $imp = new imprimir();
-        $imp->imprime("bbdd",$this->bbdd);
-        $imp->imprime("query",$query);
-       
-        $ps=$this->bbdd->prepare($query);
-        
-      
-        $ps -> execute($params);
-        $imp->imprime("ps",$ps);
+
+        imprimir::imprime("bbdd", $this->bbdd);
+        imprimir::imprime("query", $query);
+
+        $ps = $this->bbdd->prepare($query);
+
+
+        $ps->execute($params);
+        imprimir::imprime("ps", $ps);
         return $ps->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    private function execQueryNoResult($query, $params)
-    {
-        //     $ps->$this->bbdd->prepare($query);
-        //     return exe
+    public function execQueryNoResult($query, $params)
+    { //revisar es copia de execuery
+
+        echo "<br>entra en execQueryNoResult <br>";
+      
+        $ps = $this->bbdd->prepare($query);
+        imprimir::imprime("ps", $ps);
+      
+        imprimir::imprime("params", $params);
+    
+        $ps->execute($params);
+
+        imprimir::imprime("ps execute()", $ps);
+        return $ps->fetchAll(\PDO::FETCH_ASSOC);
+     
     }
 };
