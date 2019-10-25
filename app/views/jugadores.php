@@ -18,9 +18,9 @@
         <div id="players">
             <?php
             $tabla = '<table border="1">';
-            $primeraFila = true;
+            $primeraFila = false;
             foreach ($jugadores as $jugador) {
-             //   imprimir::imprime("jugador", $jugador);
+                //   imprimir::imprime("jugador", $jugador);
                 $tabla .= '<tr>';
                 if ($primeraFila) {
                     echo "primera fila";
@@ -28,13 +28,19 @@
                         imprimir::imprime("key", $key);
                         $tabla .= '<td>' . $key . '</td>';
                     }
-                    $tabla .= '<tr>'; 
+                    $tabla .= '<tr>';
                 }
-                $primeraFila=false;
-                foreach ($jugador as $key => $valor) {
-                    // $tabla .= '<td>' . $key . '</td>';
-                    $tabla .= '<td>' . $valor . '</td>';
+                $primeraFila = false;
+                foreach ($jugador as $key => $value) {
+                   
+                    $tabla .= '<td>';
+                     $tabla .= ' <a href="/jugador/' . $jugador['codigo'] .'">';
+                   
+                    $tabla .=   $value . '</a></td>';
                 }
+
+
+
                 $tabla .= '</tr>';
             }
             $tabla .= '</table>';
