@@ -34,7 +34,7 @@
                 foreach ($jugador as $key => $value) {
                    
                     $tabla .= '<td>';
-                     $tabla .= ' <a href="/jugador/' . $jugador['codigo'] .'">';
+                     $tabla .= ' <a href="'.$config["site"]["subdomain"].'/jugador/' . $jugador['codigo'] .'">';
                    
                     $tabla .=   $value . '</a></td>';
                 }

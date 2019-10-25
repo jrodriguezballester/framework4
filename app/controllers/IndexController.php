@@ -18,6 +18,7 @@ class IndexController extends Controller {
     }
 
     public function JugadoresAction() { //llamar a la base de datos, pedir un equipo y te devuelve los jugadores
+      echo "<br><br><br><br><br><br><br><br>";
         echo "entra en jugador Action  <br>";
 
        $jugadores = DB::table('jugadores')->where("Nombre_equipo", " = ", "Lakers")->get();

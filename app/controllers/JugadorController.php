@@ -10,11 +10,13 @@ class JugadorController extends Controller {
 
 
     public function DatosJugadorAction($params) {//no es seguro
-       echo "console.log('entra aqui')";
-        echo "entra en datos jugador";
-        $idJugador=$params['idJugador'];
+        echo "<br><br><br><br><br><br><br><br>";
+        echo "entra en datosJugadorAction------------------------------------------------";
         imprimir::imprime("params",$params);
-        $this->renderView(('jugador'),['jugador'=>$idJugador]);
+        $idJugador=$params['idJugador'];
+        $datosJugador = DB::table('jugadores')->where("codigo", " = ", "$idJugador")->get();
+       imprimir::imprime("jugadores de DatosJugadorAction",$datosJugador);
+        $this->renderView(('jugador'),['jugador'=>$datosJugador]);
       
     }
 
