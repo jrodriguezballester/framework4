@@ -122,21 +122,17 @@ class DB
     }
 
     public function insert($record)
-    {
-        // echo "<br><br><br><br><br><br>";
-        // echo "entra en insert";
-        $sql = "";
-        //INSERT INTO nombreTabla (Campo1, Campo2,...) VALUES (:Campo1, :Campo2,...) 
+    {   //INSERT INTO nombreTabla (Campo1, Campo2,...) VALUES (:Campo1, :Campo2,...) 
+       
+        $sql = "";        
         $sql = "INSERT INTO " . $this->getTable() . " (";
-        //     $params
-        //  imprimir::imprime("sql ",$sql);
+       
         $sqlAux = "";
         foreach ($record as $key => $value) {           
             $sql .= $key . ',';
             $values = ":$key";
             $sqlAux .= $values . ",";
-            // echo "keys".$key."<br>";
-            // echo "values".$sqlAux."<br>";
+          
             $params[":" . $key] = $value;        
         }
         $sql = substr($sql, 0, -1);
@@ -189,16 +185,16 @@ class DB
 
     public function update($record)
     {
-        //    UPDATE table name 
-        //  SET field name  = some value
-        // WHERE [Last Name] = 'Smith' 
+        //    UPDATE table name SET field name  = some value
+        //    WHERE [field Name] = 'valor' 
  echo "<br><br><br><br><br><br>";
          echo "entra en update";
         $sql = "";
        
         $sql = "UPDATE " . $this->getTable() . " SET ";
         //     $params
-        //  imprimir::imprime("sql ",$sql);
+       //   imprimir::imprime("sql ",$record);
+         
         $sqlAux = "";
         foreach ($record as $key => $value) {           
             $sql .= $key . '=';
@@ -206,21 +202,26 @@ class DB
             $sql .= $values . ",";
             // echo "keys".$key."<br>";
              echo "values".$sqlAux."<br>";
-            $params[":" . $key] = $value;        
+            $params[":" . $key] = $value; 
+          
         }
+       // $params[":codigo"] = "11113"; 
         $sql = substr($sql, 0, -1);
-        $sql .= " WHERE ";
-        foreach ($this->wheres as $condition) {
-            $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
-            $params2[";" . $condition['field']] = $condition["value"];
-        }
-        $sql = substr($sql, 0, -5);
+        $sql .= " WHERE codigo=:codigo";
+      
+    //    imprimir::imprime("sq ", $sql);
+    //     foreach ($this->wheres as $condition) {
+    //         $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
+    //         $params2[":" . $condition['field']] = $condition["value"];
+    //     }
+      
+        // $sql = substr($sql, 0, -5);
         echo "sentencia sql <br>" . $sql;
 
-        $sql = substr($sql, 0, -1);
+      //  $sql = substr($sql, 0, -1);
         $sql .= ";";
-        imprimir::imprime("la expresion sql ", $sql);
         imprimir::imprime("params ", $params);
+       // imprimir::imprime("params ", $params2);
         $condition = PdoConnection::getInstance();
         return $condition->execQueryNoResult($sql, $params);
     }
