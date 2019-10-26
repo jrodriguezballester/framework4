@@ -34,7 +34,7 @@ abstract class Controller
      * @return void
      */
     protected function renderView($viewName, $data = null) {
-          $view = new View($viewName);
+        $view = new View($viewName);
         $view->render($data);
     }
 

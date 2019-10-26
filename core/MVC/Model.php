@@ -1,10 +1,15 @@
 <?php
+
 namespace core\MVC;
+
 use core\database\DB;
+use core\database\PdoConnection;
+
 /**
  * No va para esta parte;
  */
-abstract class Model { 
+abstract class Model
+{
 
     protected $table;
 
@@ -35,28 +40,36 @@ abstract class Model {
 
     public function __get($attribute)
     {
+        return $this->attribute;
     }
 
-    public function __set($attribute, $value){
-    }
+    public function __set($attribute, $value)
+    {
+        if(property_exists($this, $attribute)) {
+            $this->$attribute = $value;
+        }
+     }
 
-    private static function getNewInstance(){
+    private static function getNewInstance()
+    {
         self::$instance = new static;
         return self::$instance;
     }
 
-    public static function getAll() {
+    public static function getAll()
+    {
         $instance = self::getNewInstance();
         $results = DB::table($instance->getTable())->get();
         return $instance->toInstances($results);
     }
 
-    private function toInstances($results, $exits=true) {
+    private function toInstances($results, $exits = true)
+    {
         $instances = [];
-        $i=0;
+        $i = 0;
         foreach ($results as $row) {
             $instance = $this->getNewInstance();
-            $j= 0;
+            $j = 0;
             foreach ($row as $key => $value) {
                 $instance->attributes[$key] = $value;
                 $instance->originals[$key] = $value;
@@ -70,22 +83,26 @@ abstract class Model {
         return $instances;
     }
 
-    public static function find($id) {
+    public static function find($id)
+    {
 
 
-     //   return $instance->toInstances($results)[0];
+        //   return $instance->toInstances($results)[0];
     }
 
-    protected function getTable() {
+    protected function getTable()
+    {
         $table = preg_replace('/[^0-9a-zA-Z_]/', '', $this->table);
         return $table;
     }
 
-    protected function getKey() {
-        return $this->key;    
+    protected function getKey()
+    {
+        return $this->key;
     }
 
-    private function setWhere($condition) {
+    private function setWhere($condition)
+    {
         array_push($this->wheres, $condition);
     }
     private function sanitize($value)
@@ -98,20 +115,21 @@ abstract class Model {
             return $operator;
         else return '=';
     }
-    protected function where($field, $operator, $value) {
-       imprimir::imprime("entra en where","");
+    protected function where($field, $operator, $value)
+    {
+        imprimir::frase("entra en where de Model");
         $condition = [
             "field" => $this->sanitize($field),
             "operator" => $this->sanitizeOperator($operator),
             "value" => $this->sanitize($value)
         ];
         $this->setWhere($condition);
-        imprimir::imprime("sale where","");
+        imprimir::imprime("condition", $condition);
+        imprimir::frase("sale where", "");
         return $this;
-
     }
 
-    
+
 
     public static function __callStatic($method, $arguments)
     {
@@ -123,63 +141,75 @@ abstract class Model {
         return self::$method(...$arguments);
     }
 
-    public function toSql(){
-    }
+    public function toSql()
+    { }
 
-    protected function get($params = null) {
+    protected function get($params = null)
+    {
         //llamamos a la conexion
+        imprimir::frase("entra en get model");
         $instance = self::getNewInstance();
-        $results = DB::table($instance->getTable())->get();
 
-       //montar la sentencia SELECT
-            echo "entra en get model<br>";
-            echo "fields<pre>".print_r($this->fields)."</pre>";
-            $sql="";
-            $sql="SELECT ";
-            if ($this->fields==null){
-                $sql.="* ";
-            }else{
-                foreach ($this->fields as $key => $value){
-                    $sql.="$value,";
-                }
-                $sql.=substr($sql,0,-1);
-    
-               
+        $results = DB::table($instance->getTable());
+        imprimir::imprime("result", $results);
+        $results->get();
+        imprimir::imprime("result", $results);
+        imprimir::frase("sigue en get model");
+        //montar la sentencia SELECT
+
+        echo "fields<pre>" . print_r($this->fields) . "</pre>";
+        $sql = "";
+        $sql = "SELECT ";
+        if ($this->fields == null) {
+            $sql .= "* ";
+        } else {
+            foreach ($this->fields as $key => $value) {
+                $sql .= "$value,";
             }
-            $sql .=" FROM " .$this->getTable()." ";
-        ///////      
-            $sql.="WHERE ";
-            foreach ($this->wheres as $condition) {
-                $sql.=$condition['field'].$condition['operator'].'"'.$condition['value'].'"'. " AND ";
-                $params[";".$condition['field']]=$condition["value"];
-            }
-            $sql=substr($sql,0,-5);
-            echo "sentencia sql <br>".$sql;
-            $condition=PdoConnection::getInstance();
-         //  echo "params".print_r($params);
-        //    return $condition->select($sql,$params);
-            return $condition->execQuery($sql,$params);
+            $sql .= substr($sql, 0, -1);
         }
-
-
-    public function save(){
-      //  return db::table($this->getTable())->wheres
+        $sql .= " FROM " . $this->getTable() . " ";
+        $sql .= "WHERE ";
+        foreach ($this->wheres as $condition) {
+            $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
+            $params[":" . $condition['field']] = $condition["value"];
+        }
+        $sql = substr($sql, 0, -5);
+        imprimir::resalta("Sentencia");
+        echo "sentencia sql <br>" . $sql;
+        $condition = PdoConnection::getInstance();
+        //  echo "params".print_r($params);
+        //    return $condition->select($sql,$params);
+        return $condition->execQuery($sql, $params);
     }
 
-    public function lastInsertId() {
+
+    public function save()
+    {
+        //obtenemos attributes
+        //comparamos con originalls
+                //insertamos o update
+
+
+
+      //    return db::table($this->getTable())->wheres;
+    }
+
+    public function lastInsertId()
+    {
         return DB::table($this->getTable())->lastInsertId();
     }
 
-    public function delete() {
-    }
+    public function delete()
+    { }
 
     /**
      * Devuelve el valor original de la clave primaria
      *
      * @return string
      */
-    private function getKeyValue() {
+    private function getKeyValue()
+    {
         return $this->originals[$this->getKey()];
     }
-
 }

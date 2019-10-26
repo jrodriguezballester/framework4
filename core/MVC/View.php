@@ -31,6 +31,7 @@ class View {
                 $$key = $value;
             }    
         }
+        imprimir::imprime("datos para vista",$data);
         //Hago accesible $config para las vistas
         $config = $GLOBALS['config'];
         $view = $GLOBALS['basedir'].ds.'app'.ds.'views'.ds.$this->view_name.".php";
@@ -38,7 +39,6 @@ class View {
 			throw new KernelException("View file (" . $view . ") not found.");
         }    
         require_once $view;
-
     }
    
 }

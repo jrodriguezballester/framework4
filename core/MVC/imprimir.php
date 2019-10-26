@@ -21,7 +21,13 @@ public static function imprime($string,$var)
         echo "</pre>";
     
     echo "<br> ";
-
 } 
-
+public static function frase($string)
+{
+    echo "<br>$string <br>";
+}
+public static function resalta($string)
+{
+    echo "<br><h2>$string</h2><br>";
+}
 }  

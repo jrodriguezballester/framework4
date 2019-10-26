@@ -33,8 +33,8 @@ class PdoConnection
         $password = $config["DB"]["PASSWORD"];
         $basededatos = $config["DB"]["NAMEDB"];
         ///poner try catch/////////////////////////////////
-        //$this->bbdd=new \PDO("$driver:host=host;dbname=$basededatos","$username","$password");
-        $this->bbdd = new \PDO("mysql:host=localhost;dbname=nba", "root", "root");
+        $this->bbdd=new \PDO("$controlador:host=$host;dbname=$basededatos","$username","$password");
+      //  $this->bbdd = new \PDO("mysql:host=localhost;dbname=nba", "root", "root");
     }
 
     //patron singlenton
@@ -70,6 +70,7 @@ class PdoConnection
     public function execQuery($query, $params)
     { // cambiar a private prepara sentencia sql, la ejecuta y la devuelve
         $ps = $this->bbdd->prepare($query);
+      //  $ps->execute();
         $ps->execute($params);
         return $ps->fetchAll(\PDO::FETCH_ASSOC);
     }

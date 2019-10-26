@@ -1,5 +1,7 @@
 <?php
 namespace app\models;
+
+use core\MVC\imprimir;
 use core\MVC\Model;
 
 /**
@@ -7,10 +9,11 @@ use core\MVC\Model;
  */
 class JugadorModel extends Model
 {
-
+ //   protected $table ;
     public function __construct()
     {
-        
+        imprimir::frase("entra en jugador model");
+        $this->table="jugadores";
     }
    
     

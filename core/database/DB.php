@@ -93,7 +93,9 @@ class DB
     ///
     public function get()
     { //montar la sentencia SELECT
-     
+     imprimir::frase("entra en get DB");
+     imprimir::resalta("aqui");
+     $params=[""];    //no entra en conditions
         $sql = "";
         $sql = "SELECT ";
         if ($this->fields == null) {
@@ -106,22 +108,23 @@ class DB
         }
         $sql .= " FROM " . $this->getTable() . " ";
         $sql .= "WHERE ";
+       imprimir::imprime("wheres",$this->wheres);
         foreach ($this->wheres as $condition) {
-            $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
-            $params[";" . $condition['field']] = $condition["value"];
+            $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";         
+            $params=[":" . $condition['field'] => $condition["value"]];
+           // imprimir::imprime("condition:-",$conditon);
         }
-        $sql = substr($sql, 0, -5);
-     
+        $sql = substr($sql, 0, -5);      
+        imprimir::imprime("params",$params);
         $condition = PdoConnection::getInstance();
         return $condition->execQuery($sql, $params);
     }
 
     public function insert($record)
     {   //INSERT INTO nombreTabla (Campo1, Campo2,...) VALUES (:Campo1, :Campo2,...) 
-       
+       $params[0]="";
         $sql = "";        
-        $sql = "INSERT INTO " . $this->getTable() . " (";
-       
+        $sql = "INSERT INTO " . $this->getTable() . " (";      
         $sqlAux = "";
         foreach ($record as $key => $value) {           
             $sql .= $key . ',';
