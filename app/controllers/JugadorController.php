@@ -8,15 +8,17 @@ use core\MVC\imprimir;
 
 class JugadorController extends Controller {
 
-
-    public function DatosJugadorAction($params) {//no es seguro
-        echo "<br><br><br><br><br><br>";
-        echo "entra en datosjugadoraction-------------------------------";
+/**
+    * Muestra un jugador de la base de datos (codigo=idJugador)
+    * te muestra la vista del Jugador 
+    *
+    * @param [type] $params array Datos del jugador
+    * @return void
+    */
+    public function DatosJugadorAction($params) {
         $jugador = DB::table('jugadores')->where("codigo", " = ", $params['idJugador'])->get();
        
         $idJugador=$params['idJugador'];
-        imprimir::imprime("params",$params);
-     //   $this->renderView(('jugador'),['jugador'=>$idJugador]);
         $this->renderView(('jugador'),['jugador'=>$jugador]);
     }
 

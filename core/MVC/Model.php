@@ -1,6 +1,9 @@
 <?php
 namespace core\MVC;
 use core\database\DB;
+/**
+ * No va para esta parte;
+ */
 abstract class Model { 
 
     protected $table;

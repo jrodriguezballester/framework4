@@ -29,22 +29,19 @@ return array(
 		),
 		"Borrar" => array(
 			"route" => $config["site"]["subdomain"]."/borrar",
-			"controller" => "index",
+			"controller" => "baseDatos",
 			"action" => "borrar"
 		),
 		"Insertar" => array(
 			"route" => $config["site"]["subdomain"]."/insertar",
-			"controller" => "index",
+			"controller" => "baseDatos",
 			"action" => "insertar"
 		),
 		"Actualizar" => array(
 			"route" => $config["site"]["subdomain"]."/actualizar",
-			"controller" => "index",
+			"controller" => "baseDatos",
 			"action" => "actualizar"
 		),
-
-
-
 
 		"Error" => array(
 			"route" => $config["site"]["subdomain"]."/error",

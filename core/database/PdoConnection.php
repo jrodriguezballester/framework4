@@ -69,32 +69,15 @@ class PdoConnection
     ///////////////
     public function execQuery($query, $params)
     { // cambiar a private prepara sentencia sql, la ejecuta y la devuelve
-        echo "<br>entra en execQuery <br>";
-
-        imprimir::imprime("bbdd", $this->bbdd);
-        imprimir::imprime("query", $query);
-
         $ps = $this->bbdd->prepare($query);
-
-
         $ps->execute($params);
-        imprimir::imprime("ps", $ps);
         return $ps->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function execQueryNoResult($query, $params)
-    { //revisar es copia de execuery
-
-        echo "<br>entra en execQueryNoResult <br>";
-      
+    {
         $ps = $this->bbdd->prepare($query);
-        imprimir::imprime("ps", $ps);
-      
-        imprimir::imprime("params", $params);
-    
         $ps->execute($params);
-
-        imprimir::imprime("ps execute()", $ps);
         return $ps->fetchAll(\PDO::FETCH_ASSOC);
      
     }

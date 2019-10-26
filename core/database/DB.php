@@ -27,7 +27,6 @@ class DB
      */
     public static function table($table)
     {
-        echo "entra en table \n";
         $instance = new static;
         $instance->setTable($table);
         return $instance;
@@ -94,8 +93,7 @@ class DB
     ///
     public function get()
     { //montar la sentencia SELECT
-        echo "entra en get <br>";
-        echo "fields<pre>" . print_r($this->fields) . "</pre>";
+     
         $sql = "";
         $sql = "SELECT ";
         if ($this->fields == null) {
@@ -107,17 +105,14 @@ class DB
             $sql .= substr($sql, 0, -1);
         }
         $sql .= " FROM " . $this->getTable() . " ";
-        ///////      
         $sql .= "WHERE ";
         foreach ($this->wheres as $condition) {
             $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
             $params[";" . $condition['field']] = $condition["value"];
         }
         $sql = substr($sql, 0, -5);
-        echo "sentencia sql <br>" . $sql;
+     
         $condition = PdoConnection::getInstance();
-        //  echo "params".print_r($params);
-        //    return $condition->select($sql,$params);
         return $condition->execQuery($sql, $params);
     }
 
@@ -139,8 +134,7 @@ class DB
         $sql .= ") VALUES (".$sqlAux;
         $sql = substr($sql, 0, -1);
         $sql .= ");";
-        imprimir::imprime("la expresion sql ", $sql);
-        imprimir::imprime("params ", $params);
+    
         $condition = PdoConnection::getInstance();
         return $condition->execQueryNoResult($sql, $params);
     }
@@ -155,29 +149,16 @@ class DB
     public function delete($record)
     {
         //    DELETE FROM nombreTabla WHERE Campo1 = :Campo1
-         echo "<br><br><br><br><br><br>";
-         echo "entra en delete";
-        $sql = "";
-       
+        $sql = "";   
         $sql = "DELETE FROM " . $this->getTable() . " WHERE ";
-        //     $params
-        //  imprimir::imprime("sql ",$sql);
         $sqlAux = "";
         foreach ($record as $key => $value) {           
             $sql .= $key . '=';
             $values = ":$key";
             $sqlAux .= $values;
-            // . ",";
-            // echo "keys".$key."<br>";
-            // echo "values".$sqlAux."<br>";
             $params[":" . $key] = $value;        
         }
-        // $sql = substr($sql, 0, -1);
-        // $sql .= ") VALUES (".$sqlAux;
-        // $sql = substr($sql, 0, -1);
-        $sql .= $sqlAux.";";
-        imprimir::imprime("la expresion sql ", $sql);
-        imprimir::imprime("params ", $params);
+         $sql .= $sqlAux.";";
         $condition = PdoConnection::getInstance();
         return $condition->execQueryNoResult($sql, $params);
 
@@ -187,41 +168,20 @@ class DB
     {
         //    UPDATE table name SET field name  = some value
         //    WHERE [field Name] = 'valor' 
- echo "<br><br><br><br><br><br>";
-         echo "entra en update";
-        $sql = "";
-       
+ 
+        $sql = "";      
         $sql = "UPDATE " . $this->getTable() . " SET ";
-        //     $params
-       //   imprimir::imprime("sql ",$record);
-         
-        $sqlAux = "";
+           $sqlAux = "";
         foreach ($record as $key => $value) {           
             $sql .= $key . '=';
             $values = ":$key";
             $sql .= $values . ",";
-            // echo "keys".$key."<br>";
-             echo "values".$sqlAux."<br>";
             $params[":" . $key] = $value; 
           
         }
-       // $params[":codigo"] = "11113"; 
         $sql = substr($sql, 0, -1);
-        $sql .= " WHERE codigo=:codigo";
-      
-    //    imprimir::imprime("sq ", $sql);
-    //     foreach ($this->wheres as $condition) {
-    //         $sql .= $condition['field'] . $condition['operator'] . '"' . $condition['value'] . '"' . " AND ";
-    //         $params2[":" . $condition['field']] = $condition["value"];
-    //     }
-      
-        // $sql = substr($sql, 0, -5);
-        echo "sentencia sql <br>" . $sql;
+        $sql .= " WHERE codigo=:codigo;";
 
-      //  $sql = substr($sql, 0, -1);
-        $sql .= ";";
-        imprimir::imprime("params ", $params);
-       // imprimir::imprime("params ", $params2);
         $condition = PdoConnection::getInstance();
         return $condition->execQueryNoResult($sql, $params);
     }

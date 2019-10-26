@@ -83,7 +83,7 @@ class Kernel extends Router{
 	}
 
 	/**
-	 * Llama al método pareUriRouter() de Router para buscar la ruta que coincida.
+	 * Llama al método parseUriRouter() de Router para buscar la ruta que coincida.
 	 * Si la encuentra, carga el controlador y llama a su método run()
 	 *
 	 * @return void

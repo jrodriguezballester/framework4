@@ -2,13 +2,21 @@
 namespace core\MVC;
 
 /**
- * Clase base para los controladores
+ * Clase para facilitar el debuger
  */
  class imprimir {
-
-public static function imprime($tring,$var)
+/**
+ * Muestra por pantalla las variables pasadas
+ *
+ * @param [type] $string
+ * Facilita la identificacion de $var
+ * @param [type] $var
+ * variable que queremos mostrar
+ * @return void
+ */
+public static function imprime($string,$var)
 {
-    echo "<br>$tring <pre>";
+    echo "<br>$string <pre>";
         print_r($var);
         echo "</pre>";
     

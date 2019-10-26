@@ -21,7 +21,7 @@ class IndexController extends Controller
     }
 /**
  *  llamar a la base de datos, pedir un equipo 
- * te devuelve los jugadores y llama a la vista
+ * se guarda los jugadores y llama a la vista
  *
  * @return void
  */
@@ -44,7 +44,7 @@ class IndexController extends Controller
       $this->renderView('jugadores', ['jugadores' => $jugadores]);
     }
     /**
-    * Borra un jugador de la base de datos, pasado por el array $record 
+    * Inserta un jugador de la base de datos, escrito en el array $record 
     * te muestra la vista de los jugadores 
     *
     * @return void
@@ -58,17 +58,16 @@ class IndexController extends Controller
         $this->renderView('jugadores', ['jugadores' => $jugadores]);
     }
  /**
-    * Actualiza un jugador de la base de datos, pasado por el array $record 
+    * Actualiza un jugador de la base de datos (codigo=11112), pasado por el array $record 
     * te muestra la vista de los jugadores 
     *
     * @return void
     */
     public function ActualizarAction()
     { 
-        $record = array( "codigo" => 11112,"Nombre" => "pepe Buckner", "Procedencia" => "Clemson", "Altura" => "6-4",  "Posicion" => "G-F", "Nombre_equipo" => "Lakers");
+        $record = array( "codigo" => 11112,"Nombre" => "PEPE ", "Procedencia" => "MISLATA", "Altura" => "6-4",  "Posicion" => "G-F", "Nombre_equipo" => "Lakers");
       
         $jugadores = DB::table('jugadores')->where("Nombre_equipo", " = ", "Lakers")->update($record);
-        imprimir::imprime("Accion:-----",$jugadores);
         $jugadores = DB::table('jugadores')->where("Nombre_equipo", " = ", "Lakers")->get();
         $this->renderView('jugadores', ['jugadores' => $jugadores]);
     }

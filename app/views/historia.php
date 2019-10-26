@@ -10,7 +10,7 @@
     include "menu.php";
 ?>
 <div id="content">
-    Historia  
+<h1>  Historia  </h1>
 </div>    
 </body>
 </html>

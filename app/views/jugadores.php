@@ -16,16 +16,17 @@
     ?>
     <div id="content">
         <div id="players">
+        <h1>Jugadores de los Lakers</h1>
             <?php
-            $tabla = '<table border="1">';
+            $tabla = '<table border="1" style="margin:auto">';
             $primeraFila = false;
             foreach ($jugadores as $jugador) {
                 //   imprimir::imprime("jugador", $jugador);
                 $tabla .= '<tr>';
                 if ($primeraFila) {
-                    echo "primera fila";
+             //       echo "primera fila";
                     foreach ($jugador as $key => $value) {
-                        imprimir::imprime("key", $key);
+             //           imprimir::imprime("key", $key);
                         $tabla .= '<td>' . $key . '</td>';
                     }
                     $tabla .= '<tr>';

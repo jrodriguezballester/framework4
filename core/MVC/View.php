@@ -25,14 +25,9 @@ class View {
      * @return void
      */
     public function render($data = null) {
-        echo "entra en render";
+     
         if ($data!=null) {
-            imprimir::imprime("data",$data);
-            foreach ($data as $key => $value) {
-                imprimir::imprime("key",$key);
-                imprimir::imprime("value",$value);
-                //convertir $key en el nombre de una variable.
-                //Se añade un dolar al principio para que lo tome como una variable
+                   foreach ($data as $key => $value) {
                 $$key = $value;
             }    
         }
@@ -43,7 +38,6 @@ class View {
 			throw new KernelException("View file (" . $view . ") not found.");
         }    
         require_once $view;
-        echo "Sale del render";
 
     }
    
